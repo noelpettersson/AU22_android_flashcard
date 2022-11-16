@@ -1,4 +1,4 @@
-package com.example.au22_flashcard
+package com.example.au22_flashcard.database
 
 import android.content.Context
 import androidx.room.Database

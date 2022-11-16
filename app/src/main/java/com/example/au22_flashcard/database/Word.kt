@@ -1,4 +1,4 @@
-package com.example.au22_flashcard
+package com.example.au22_flashcard.database
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

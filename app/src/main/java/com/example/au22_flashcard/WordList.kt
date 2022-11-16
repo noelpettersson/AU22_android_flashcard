@@ -1,8 +1,16 @@
 package com.example.au22_flashcard
 
-class WordList() {
-    private val wordList = mutableListOf<Word>()
+import android.util.Log
+import com.example.au22_flashcard.database.Word
+import com.example.au22_flashcard.database.WordViewModel
+import java.util.Observer
+
+class WordList(viewModel: WordViewModel) {
+    private var wordList = mutableListOf<Word>()
     private val usedWords = mutableListOf<Word>()
+
+    var mViewModel = viewModel
+
 
     init {
         initializeWords()
@@ -10,13 +18,7 @@ class WordList() {
 
 
     fun initializeWords() {
-        val word = Word("Hello", "Hej")
-        wordList.add(word)
-        wordList.add(Word("Good bye", "Hej då"))
-        wordList.add(Word("Thank you", "Tack"))
-        wordList.add(Word("Welcome", "Välkommen"))
-        wordList.add(Word("Computer", "Dator"))
-
+        //get all words from viewmodel
     }
 
 //    fun getNewWord() : Word {
