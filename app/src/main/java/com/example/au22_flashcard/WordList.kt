@@ -1,8 +1,12 @@
 package com.example.au22_flashcard
 
+import android.provider.UserDictionary.Words
 import android.util.Log
 import com.example.au22_flashcard.database.Word
 import com.example.au22_flashcard.database.WordViewModel
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.util.Observer
 
 class WordList(viewModel: WordViewModel) {
@@ -18,8 +22,9 @@ class WordList(viewModel: WordViewModel) {
 
 
     fun initializeWords() {
-        //get all words from viewmodel
+
     }
+
 
 //    fun getNewWord() : Word {
 //        val rnd = (0 until wordList.size).random()

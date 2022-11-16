@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 //Repository for room
 class WordRepository(private val wordDao: WordDao) {
 
-    val allWords: LiveData<List<Word>> = wordDao.getAllWords()
+    val allWords: LiveData<List<Word>> = wordDao.getAll()
 
     suspend fun insert(word: Word) {
         wordDao.insert(word)

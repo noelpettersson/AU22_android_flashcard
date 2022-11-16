@@ -7,13 +7,17 @@ import android.provider.Settings.Global
 import android.util.Log
 import android.view.MotionEvent
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 import com.example.au22_flashcard.database.Word
 import com.example.au22_flashcard.database.WordViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
+    lateinit var mWordViewModel: WordViewModel
     lateinit var wordView : TextView
     var currentWord : Word? = null
 
@@ -22,16 +26,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val mWordViewModel = WordViewModel(application)
+        mWordViewModel = ViewModelProvider(this)[WordViewModel::class.java]
 
-        //put words in a list
-
-
-
-
-        //val wordList = WordList(mWordViewModel)
-
-        //Go to addWord activity if button is pressed
         findViewById<com.google.android.material.floatingactionbutton.FloatingActionButton>(R.id.addWordButton).setOnClickListener {
             val intent = Intent(this, AddWords::class.java)
             startActivity(intent)
@@ -44,6 +40,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         wordView = findViewById(R.id.wordTextView)
+        getWord() //Get a word from the database
+
+
+
 
         //showNewWord()
 
@@ -54,14 +54,25 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun revealTranslation() {
-       // wordView.text = currentWord?.english
+        wordView.text = currentWord?.english
     }
 
+    fun getWord() {
+        //Get list of words from database with observer
+        mWordViewModel.allWords.observe(this) { word ->
+            if (word.isNotEmpty()) {
+                currentWord = word.random()
+                Log.d("karma", "onCreate: ${currentWord!!.english}")
+                //
+                wordView.text = currentWord!!.swedish
+            }
+        }
+    }
 
     fun showNewWord() {
 
-       // currentWord = wordList.getNewWord()
-       // wordView.text = currentWord?.swedish
+        getWord()
+        wordView.text = currentWord?.swedish
     }
 
 
