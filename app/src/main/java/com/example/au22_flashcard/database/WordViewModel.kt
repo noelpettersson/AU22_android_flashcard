@@ -30,4 +30,12 @@ class WordViewModel(application: Application) : AndroidViewModel(application) {
     fun deleteAll() = viewModelScope.launch(Dispatchers.IO) {
         repository.deleteAll()
     }
+
+    fun getRandomWord(): LiveData<Word> {
+        return repository.getRandomWord()
+    }
+
+    fun getTableSize(): LiveData<Int> {
+        return repository.getTableSize()
+    }
 }

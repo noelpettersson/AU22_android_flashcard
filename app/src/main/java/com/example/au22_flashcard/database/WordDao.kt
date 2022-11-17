@@ -24,4 +24,11 @@ interface WordDao {
     @Query("DELETE FROM word_table")
     suspend fun deleteAll()
 
+    //Get random word
+    @Query("SELECT * FROM word_table ORDER BY RANDOM() LIMIT 1")
+    fun getRandomWord(): LiveData<Word>
+
+    //Get table size
+    @Query("SELECT COUNT(*) FROM word_table")
+    fun getTableSize(): LiveData<Int>
 }

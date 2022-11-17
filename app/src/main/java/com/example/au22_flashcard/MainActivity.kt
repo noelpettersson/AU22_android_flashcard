@@ -10,17 +10,14 @@ import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import com.example.au22_flashcard.database.Word
 import com.example.au22_flashcard.database.WordViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var mWordViewModel: WordViewModel
     lateinit var wordView : TextView
     var currentWord : Word? = null
-
+    var usedWords : MutableList<String> = mutableListOf()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,19 +55,32 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun getWord() {
-        //Get list of words from database with observer
-        mWordViewModel.allWords.observe(this) { word ->
-            if (word.isNotEmpty()) {
-                currentWord = word.random()
-                Log.d("karma", "onCreate: ${currentWord!!.english}")
-                //
-                wordView.text = currentWord!!.english
+        //use getTableSize from viewmodel to check if all words have been used
+        mWordViewModel.getTableSize().observe(this) { size ->
+            if (size == usedWords.size) {
+                usedWords.clear()
+                getWord()
+            } else {
+                //Get random word from viewmodel and use observer to look at live data
+                mWordViewModel.getRandomWord().observe(this) { word ->
+                    if (word != null && !usedWords.contains(word.english)) {
+                        currentWord = word
+                        wordView.text = word.english
+                        usedWords.add(word.english)
+                    } // else if all words have been used, reset usedWords and get a new word
+                    else if(word != null && usedWords.contains(word.english)) {
+                        getWord()
+                    }
+
+                    else if(word == null) {
+                        wordView.text = "No words in database"
+                    }
+                }
+            }
             }
         }
-    }
 
     fun showNewWord() {
-
         getWord()
         wordView.text = currentWord?.english
     }

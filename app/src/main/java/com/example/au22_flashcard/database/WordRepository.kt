@@ -18,4 +18,12 @@ class WordRepository(private val wordDao: WordDao) {
     suspend fun deleteAll() {
         wordDao.deleteAll()
     }
+
+    fun getRandomWord(): LiveData<Word> {
+        return wordDao.getRandomWord()
+    }
+
+    fun getTableSize(): LiveData<Int> {
+        return wordDao.getTableSize()
+    }
 }
