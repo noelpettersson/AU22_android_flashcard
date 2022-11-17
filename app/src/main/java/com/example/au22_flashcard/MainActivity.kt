@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun revealTranslation() {
-        wordView.text = currentWord?.english
+        wordView.text = currentWord?.swedish
     }
 
     fun getWord() {
@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
                 currentWord = word.random()
                 Log.d("karma", "onCreate: ${currentWord!!.english}")
                 //
-                wordView.text = currentWord!!.swedish
+                wordView.text = currentWord!!.english
             }
         }
     }
@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
     fun showNewWord() {
 
         getWord()
-        wordView.text = currentWord?.swedish
+        wordView.text = currentWord?.english
     }
 
 
